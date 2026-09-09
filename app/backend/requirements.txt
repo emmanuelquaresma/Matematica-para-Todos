@@ -1,1 +1,2 @@
-# Dependências Python do backend serão declaradas aqui.
+fastapi
+uvicorn
