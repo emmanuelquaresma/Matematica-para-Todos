@@ -31,6 +31,35 @@
             </a>
 
         </section>
+
+        <section class="lightning-game" aria-labelledby="game-title">
+            <div class="lightning-game__intro">
+                <p class="game-kicker">⚡ Hora de praticar</p>
+                <h2 id="game-title">Desafio Relâmpago</h2>
+                <p>Resolva uma conta rápida e marque pontos!</p>
+            </div>
+
+            <div class="game-board">
+                <p class="game-question" id="game-question" aria-live="polite"></p>
+
+                <form class="game-form" id="game-form">
+                    <label class="sr-only" for="game-answer">Sua resposta</label>
+                    <input id="game-answer" name="answer" type="number" inputmode="numeric" autocomplete="off" placeholder="Sua resposta">
+                    <button class="game-button game-button--confirm" type="submit">Confirmar</button>
+                    <button class="game-button game-button--new" id="new-question" type="button">Nova pergunta</button>
+                </form>
+
+                <p class="game-feedback" id="game-feedback" role="status" aria-live="polite"></p>
+
+                <dl class="game-stats" aria-label="Seu desempenho no desafio">
+                    <div><dt>Pontos</dt><dd id="game-score">0</dd></div>
+                    <div><dt>Acertos</dt><dd id="game-correct">0</dd></div>
+                    <div><dt>Sequência</dt><dd id="game-streak">0</dd></div>
+                    <div><dt>Melhor sequência</dt><dd id="game-best-streak">0</dd></div>
+                </dl>
+            </div>
+        </section>
     </main>
+    <script src="/static/js/menu-game.js"></script>
 </body>
 </html>
