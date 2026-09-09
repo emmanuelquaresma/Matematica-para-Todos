@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Função do 1º Grau | Matemática pra Todos</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<header>
+    <h1>Matemática pra Todos</h1>
+    <p>Explore funções, gráficos e cálculos matemáticos.</p>
+</header>
+
+<main>
+
+    <div class="voltar">
+        <a href="index.html">← Voltar ao menu</a>
+    </div>
+
+    <section class="card">
+
+        <h2>Função do 1º Grau</h2>
+
+        <div class="formula">
+            f(x) = ax + b
+        </div>
+
+        <p>
+            Informe os coeficientes da função e o intervalo que deseja
+            visualizar no gráfico.
+        </p>
+
+        <div class="form-grid">
+
+            <div>
+                <label for="a">Coeficiente a</label>
+                <input type="number" id="a" value="2" step="any">
+            </div>
+
+            <div>
+                <label for="b">Coeficiente b</label>
+                <input type="number" id="b" value="-4" step="any">
+            </div>
+
+            <div>
+                <label for="xInicial">X inicial</label>
+                <input type="number" id="xInicial" value="-10" step="any">
+            </div>
+
+            <div>
+                <label for="xFinal">X final</label>
+                <input type="number" id="xFinal" value="10" step="any">
+            </div>
+
+        </div>
+
+        <button type="button" onclick="calcularFuncao()">
+            Calcular e gerar gráfico
+        </button>
+
+    </section>
+
+
+    <section class="card">
+
+        <h2>Resultados</h2>
+
+        <div id="resultados">
+
+            <p>
+                <strong>Equação:</strong>
+                <span id="equacao"></span>
+            </p>
+
+            <p>
+                <strong>Raiz:</strong>
+                <span id="raiz"></span>
+            </p>
+
+            <p>
+                <strong>Coeficiente angular (a):</strong>
+                <span id="coefAngular"></span>
+            </p>
+
+            <p>
+                <strong>Coeficiente linear (b):</strong>
+                <span id="coefLinear"></span>
+            </p>
+
+            <p>
+                <strong>Comportamento:</strong>
+                <span id="comportamento"></span>
+            </p>
+
+            <p>
+                <strong>Intercepto no eixo Y:</strong>
+                <span id="interceptoY"></span>
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="card">
+
+        <h2>Gráfico</h2>
+
+        <div class="grafico-container">
+            <canvas id="grafico"></canvas>
+        </div>
+
+    </section>
+
+
+    <section class="card">
+
+        <h2>Entendendo a função</h2>
+
+        <p>
+            Uma função do primeiro grau possui a forma
+            <strong>f(x) = ax + b</strong>, onde
+            <strong>a ≠ 0</strong>.
+        </p>
+
+        <p>
+            O coeficiente <strong>a</strong> determina a inclinação da reta.
+            Quando a é positivo, a função é crescente. Quando a é negativo,
+            a função é decrescente.
+        </p>
+
+        <p>
+            O coeficiente <strong>b</strong> indica o ponto onde a reta
+            intercepta o eixo Y.
+        </p>
+
+        <p>
+            A raiz da função corresponde ao valor de x para o qual
+            <strong>f(x) = 0</strong>.
+        </p>
+
+        <div class="formula">
+            x = -b / a
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>Matemática pra Todos</p>
+</footer>
+
+<script src="js/primeiro-grau.js"></script>
+
+</body>
+</html>

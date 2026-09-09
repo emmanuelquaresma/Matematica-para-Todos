@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Matemática pra Todos</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<header>
+    <h1>Matemática pra Todos</h1>
+    <p>Explore funções, gráficos e cálculos matemáticos.</p>
+</header>
+
+<main>
+
+    <section class="card">
+
+        <h2>Função Quadrática</h2>
+
+        <p class="formula">
+            f(x) = ax² + bx + c
+        </p>
+
+        <div class="campos">
+
+            <label>
+                a
+                <input type="number" id="a" value="1" step="any">
+            </label>
+
+            <label>
+                b
+                <input type="number" id="b" value="-4" step="any">
+            </label>
+
+            <label>
+                c
+                <input type="number" id="c" value="3" step="any">
+            </label>
+
+        </div>
+
+        <div class="campos">
+
+            <label>
+                X inicial
+                <input type="number" id="xmin" value="-10">
+            </label>
+
+            <label>
+                X final
+                <input type="number" id="xmax" value="10">
+            </label>
+
+        </div>
+
+        <button onclick="calcular()">
+            Gerar gráfico
+        </button>
+
+    </section>
+
+
+    <section class="card resultados">
+
+        <h2>Resultados</h2>
+
+        <div id="equacao"></div>
+        <div id="delta"></div>
+        <div id="raizes"></div>
+        <div id="vertice"></div>
+        <div id="concavidade"></div>
+
+    </section>
+
+
+    <section class="card grafico">
+
+        <h2>Gráfico</h2>
+
+        <canvas id="grafico"></canvas>
+
+    </section>
+
+
+    <section class="card">
+
+        <h2>Tabela de valores</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>x</th>
+                    <th>f(x)</th>
+                </tr>
+            </thead>
+
+            <tbody id="tabelaValores"></tbody>
+
+        </table>
+
+    </section>
+
+</main>
+
+<footer>
+    Matemática pra Todos
+</footer>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
