@@ -1,0 +1,1 @@
+# Imagem-base do backend.
