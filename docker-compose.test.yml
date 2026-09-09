@@ -1,1 +1,6 @@
-# Orquestração destinada à execução dos testes.
+services:
+  backend:
+    environment:
+      APP_ENV: test
+    ports:
+      - "127.0.0.1:8002:8000"

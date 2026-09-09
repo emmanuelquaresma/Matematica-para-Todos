@@ -1,4 +1,9 @@
+import os
+
 from fastapi import FastAPI
+
+
+APP_ENV = os.getenv("APP_ENV", "development")
 
 
 app = FastAPI(title="Matemática pra Todos")

@@ -1,1 +1,4 @@
-# Orquestração base dos serviços do projeto.
+services:
+  backend:
+    build:
+      context: ./app/backend
