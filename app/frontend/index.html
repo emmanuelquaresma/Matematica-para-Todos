@@ -4,80 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matemática pra Todos</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/static/css/home.css">
 </head>
-
 <body>
-
-<header>
-    <h1>Matemática pra Todos</h1>
-    <p>Aprenda matemática de forma simples, visual e interativa.</p>
-</header>
-
-<main>
-
-    <section class="card home-card">
-
-        <h2>Explore a Matemática</h2>
-
-        <p class="home-intro">
-            Escolha um conteúdo abaixo para estudar conceitos,
-            realizar cálculos e visualizar os resultados graficamente.
-        </p>
-
-        <div class="menu-matematica">
-
-            <a class="menu-card" href="primeiro-grau.html">
-
-                <div class="menu-numero">1º</div>
-
-                <h3>Função do 1º Grau</h3>
-
-                <div class="menu-formula">
-                    f(x) = ax + b
-                </div>
-
-                <p>
-                    Explore coeficientes, encontre a raiz da função
-                    e visualize o comportamento da reta no gráfico.
-                </p>
-
-                <span class="menu-botao">
-                    Explorar função
-                </span>
-
-            </a>
-
-            <a class="menu-card" href="segundo-grau.html">
-
-                <div class="menu-numero">2º</div>
-
-                <h3>Função do 2º Grau</h3>
-
-                <div class="menu-formula">
-                    f(x) = ax² + bx + c
-                </div>
-
-                <p>
-                    Calcule Δ, raízes, vértice e concavidade
-                    e visualize a parábola graficamente.
-                </p>
-
-                <span class="menu-botao">
-                    Explorar função
-                </span>
-
-            </a>
-
-        </div>
-
-    </section>
-
-</main>
-
-<footer>
-    <p>Matemática pra Todos</p>
-</footer>
-
+    <main class="home">
+        <h1 class="sr-only">Matemática pra Todos</h1>
+        <section class="opening" aria-label="Boas-vindas ao projeto Matemática pra Todos">
+            <img
+                class="opening__banner"
+                src="/static/img/banner/banner-matematica-pra-todos.webp"
+                alt="Matemática pra Todos: família estudando matemática"
+            >
+            <a class="opening__button" href="/menu">Entrar <span aria-hidden="true">→</span></a>
+        </section>
+    </main>
 </body>
 </html>

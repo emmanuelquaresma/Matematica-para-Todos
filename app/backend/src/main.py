@@ -1,6 +1,9 @@
 import os
+from pathlib import Path
 
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 
 APP_ENV = os.getenv("APP_ENV", "development")
@@ -8,10 +11,20 @@ APP_ENV = os.getenv("APP_ENV", "development")
 
 app = FastAPI(title="Matemática pra Todos")
 
+BACKEND_DIR = Path(__file__).resolve().parent.parent
+FRONTEND_DIR = BACKEND_DIR / "frontend"
+
+app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
+
 
 @app.get("/")
-def read_root() -> dict[str, str]:
-    return {"app": "Matemática pra Todos", "status": "online"}
+def read_root() -> FileResponse:
+    return FileResponse(FRONTEND_DIR / "index.html")
+
+
+@app.get("/menu")
+def menu() -> FileResponse:
+    return FileResponse(FRONTEND_DIR / "pages" / "menu.html")
 
 
 @app.get("/health")
