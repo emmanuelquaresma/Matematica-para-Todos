@@ -51,6 +51,7 @@ h1 { margin-bottom: 14px; color: var(--blue-950); font-size: clamp(2.1rem, 5vw, 
 a.subject-card:hover, a.subject-card:focus-visible { transform: translateY(-6px); box-shadow: 0 18px 30px rgba(18, 52, 91, 0.14); }
 .subject-card--linear { background: var(--blue-100); }
 .subject-card--quadratic { background: #fff4bd; }
+.subject-card--checkers { background: #ddecff; }
 
 .subject-card__number {
     display: grid;

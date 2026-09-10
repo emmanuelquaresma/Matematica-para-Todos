@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dama Matemática | Matemática pra Todos</title>
+    <link rel="stylesheet" href="/static/css/dama.css">
+</head>
+<body>
+    <header class="checkers-header">
+        <a class="checkers-header__back" href="/menu">← Voltar ao menu</a>
+        <div>
+            <h1>Dama Matemática</h1>
+            <p>Estratégia, lógica e diversão.</p>
+        </div>
+    </header>
+
+    <main class="checkers-page">
+        <section id="mode-choice" class="game-panel mode-panel" aria-labelledby="mode-title">
+            <h2 id="mode-title">Como você quer jogar?</h2>
+            <div class="mode-actions">
+                <button id="choose-local" class="restart-button" type="button">Jogar local</button>
+                <button id="choose-online" class="restart-button" type="button">Jogar online</button>
+            </div>
+        </section>
+        <p id="network-message" class="game-message" role="status" aria-live="polite"></p>
+        <section id="online-entry" class="game-panel mode-panel" hidden aria-label="Entrar no jogo online">
+            <h2>Jogar online</h2>
+            <button id="create-room" class="restart-button" type="button">Criar sala</button>
+            <form id="join-room" class="room-form">
+                <label for="room-code">Código da sala</label>
+                <input id="room-code" required maxlength="64" autocomplete="off" autocapitalize="none" spellcheck="false">
+                <button class="restart-button" type="submit">Entrar em sala existente</button>
+            </form>
+            <button id="entry-back" class="restart-button" type="button">Voltar</button>
+        </section>
+        <section id="online-game" hidden aria-label="Sala online">
+            <div class="game-layout">
+                <div class="board-area">
+                    <h2>Sala online</h2>
+                    <p id="online-room-status" role="status">Aguardando outro jogador...</p>
+                    <p>As jogadas online estarão disponíveis em uma próxima etapa.</p>
+                    <div id="online-board" class="checkers-board" role="img" aria-label="Estado do tabuleiro online"></div>
+                </div>
+                <aside class="game-panel" aria-label="Informações da sala">
+                    <dl class="game-status online-status">
+                        <div><dt>Código da sala</dt><dd id="online-code"></dd></div>
+                        <div><dt>Sua cor</dt><dd id="online-color"></dd></div>
+                        <div><dt>Conexão</dt><dd id="online-connection">Desconectado</dd></div>
+                        <div><dt>Adversário</dt><dd id="online-opponent">Aguardando jogador</dd></div>
+                        <div><dt>Turno</dt><dd id="online-turn"></dd></div>
+                    </dl>
+                    <button id="retry-online" class="restart-button" type="button">Reconectar agora</button>
+                    <button id="leave-room" class="restart-button" type="button">Sair da partida</button>
+                    <button id="online-local" class="restart-button" type="button">Jogar local por enquanto</button>
+                </aside>
+            </div>
+        </section>
+        <div id="local-game" hidden>
+        <button id="local-back" class="restart-button mode-back" type="button">Escolher modo</button>
+        <section class="game-layout" aria-labelledby="game-heading">
+            <div class="board-area">
+                <div class="game-intro">
+                    <p class="eyebrow">♟ Jogo local para duas pessoas</p>
+                    <h2 id="game-heading">Partida em andamento</h2>
+                    <p id="game-message" class="game-message" role="status" aria-live="polite">Vez das peças brancas.</p>
+                </div>
+                <div id="checkers-board" class="checkers-board" role="grid" aria-label="Tabuleiro de dama"></div>
+            </div>
+
+            <aside class="game-panel" aria-label="Status da partida">
+                <p id="turn-indicator" class="turn-indicator">Vez das peças brancas</p>
+                <dl class="game-status">
+                    <div><dt>Peças brancas</dt><dd id="player-one-pieces">12</dd></div>
+                    <div><dt>Peças pretas</dt><dd id="player-two-pieces">12</dd></div>
+                    <div><dt>Capturadas pelas brancas</dt><dd id="player-one-captures">0</dd></div>
+                    <div><dt>Capturadas pelas pretas</dt><dd id="player-two-captures">0</dd></div>
+                </dl>
+                <button id="restart-game" class="restart-button" type="button">Reiniciar partida</button>
+            </aside>
+        </section>
+
+        <section id="winner-card" class="winner-card" hidden aria-live="assertive">
+            <h2 id="winner-message"></h2>
+            <button id="play-again" class="play-again-button" type="button">Jogar novamente</button>
+        </section>
+        </div>
+    </main>
+    <script src="/static/js/dama.js"></script>
+    <script src="/static/js/dama-multiplayer.js"></script>
+</body>
+</html>
