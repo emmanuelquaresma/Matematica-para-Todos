@@ -59,6 +59,6 @@ body { min-width: 320px; margin: 0; color: var(--ink); font-family: "Nunito", "S
 .online-status dd { overflow-wrap: anywhere; max-width: 100%; }
 #online-code { user-select: all; font-family: monospace; }
 #online-game .restart-button + .restart-button { margin-top: 12px; }
-#online-board .square { cursor: default; }
+#online-board .square:disabled { cursor: default; opacity: 1; }
 #network-message:not(:empty) { margin-bottom: 20px; }
 .mode-panel button:disabled { opacity: 0.6; cursor: wait; }

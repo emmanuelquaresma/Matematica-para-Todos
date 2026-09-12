@@ -5,11 +5,14 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from routes.dama import router as dama_router
+
 
 APP_ENV = os.getenv("APP_ENV", "development")
 
 
 app = FastAPI(title="Matemática pra Todos")
+app.include_router(dama_router)
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BACKEND_DIR / "frontend"

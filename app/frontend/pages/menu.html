@@ -5,17 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escolha um tema | Matemática pra Todos</title>
     <link rel="stylesheet" href="/static/css/menu.css">
+    <link rel="stylesheet" href="/static/css/site.css">
+    <script src="/static/js/site-ui.js" defer></script>
 </head>
 <body>
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a class="site-brand" href="/" aria-label="Matemática pra Todos — início">
+                <span class="site-brand__symbol" aria-hidden="true">Σ</span>
+                <span>Matemática <span class="site-brand__sub">pra Todos</span></span>
+            </a>
+            <nav class="site-nav" id="site-navigation" aria-label="Navegação principal">
+                <a href="/">Início</a>
+                <a href="/menu#atividades">Atividades</a>
+                <a href="/menu#jogos">Jogos</a>
+            </nav>
+            <a class="site-enter" href="/menu" aria-label="Entrar nas atividades">
+                <svg aria-hidden="true" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h5v18h-5M3 12h12M10 7l5 5-5 5"/></svg>
+                <span>Entrar</span>
+            </a>
+            <button class="site-toggle" type="button" aria-controls="site-navigation" aria-expanded="false" aria-label="Abrir menu de navegação" hidden>
+                <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+    </header>
+
     <main class="menu-page">
         <header class="menu-header">
-            <a class="brand" href="/">Matemática pra Todos</a>
             <p class="menu-kicker">Seu próximo passo</p>
             <h1>O que você quer aprender hoje?</h1>
             <p>Escolha um tema e explore no seu ritmo.</p>
         </header>
 
-        <section class="subject-grid" aria-label="Conteúdos de matemática">
+        <section class="activity-carousel" id="atividades" aria-label="Escolha uma atividade" aria-roledescription="carrossel">
+            <div class="subject-grid" id="activity-track" tabindex="0" aria-label="Atividades; use as setas para navegar">
             <a class="subject-card subject-card--linear" href="/static/primeiro-grau.html">
                 <span class="subject-card__number">1º</span>
                 <h2>Função do 1º Grau</h2>
@@ -30,35 +53,53 @@
                 <span class="subject-card__link">Começar <span aria-hidden="true">→</span></span>
             </a>
 
-            <a class="subject-card subject-card--checkers" href="/static/dama.html">
+            <a id="jogos" class="subject-card subject-card--checkers" href="/static/dama.html">
                 <span class="subject-card__number">♟</span>
                 <h2>Dama Matemática</h2>
                 <p>Desafie sua estratégia em um clássico jogo de tabuleiro.</p>
                 <span class="subject-card__link">Jogar agora <span aria-hidden="true">→</span></span>
             </a>
 
+            <a class="subject-card subject-card--lightning" href="#desafio">
+                <span class="subject-card__number" aria-hidden="true">⚡</span>
+                <h2>Desafio Relâmpago</h2>
+                <p>Uma conta por vez. Pratique e supere sua sequência de acertos.</p>
+                <span class="subject-card__link">Aceitar o desafio <span aria-hidden="true">→</span></span>
+            </a>
+            </div>
+            <div class="carousel-controls" hidden>
+                <button class="carousel-arrow" id="carousel-prev" type="button" aria-label="Atividade anterior" aria-controls="activity-track">←</button>
+                <div class="carousel-dots" aria-label="Selecionar atividade"></div>
+                <button class="carousel-arrow" id="carousel-next" type="button" aria-label="Próxima atividade" aria-controls="activity-track">→</button>
+            </div>
+            <p class="sr-only" id="carousel-status" role="status" aria-live="polite"></p>
         </section>
 
+        <details class="practice-disclosure" id="desafio">
+            <summary>⚡ Praticar com o Desafio Relâmpago <span aria-hidden="true">＋</span></summary>
         <section class="lightning-game" aria-labelledby="game-title">
             <div class="lightning-game__intro">
                 <p class="game-kicker">⚡ Hora de praticar</p>
                 <h2 id="game-title">Desafio Relâmpago</h2>
-                <p>Resolva uma conta rápida e marque pontos!</p>
+                <p>Complete 10 cálculos corretos no menor tempo. Erros não encerram a rodada.</p>
             </div>
 
             <div class="game-board">
-                <p class="game-question" id="game-question" aria-live="polite"></p>
+                <p class="game-question" id="game-question" aria-live="polite">Pronto para começar?</p>
+                <button id="game-start" class="game-button game-button--confirm" type="button">Iniciar desafio</button>
 
                 <form class="game-form" id="game-form">
                     <label class="sr-only" for="game-answer">Sua resposta</label>
                     <input id="game-answer" name="answer" type="number" inputmode="numeric" autocomplete="off" placeholder="Sua resposta">
                     <button class="game-button game-button--confirm" type="submit">Confirmar</button>
-                    <button class="game-button game-button--new" id="new-question" type="button">Nova pergunta</button>
                 </form>
 
                 <p class="game-feedback" id="game-feedback" role="status" aria-live="polite"></p>
 
                 <dl class="game-stats" aria-label="Seu desempenho no desafio">
+                    <div><dt>Tempo</dt><dd id="game-time">00:00</dd></div>
+                    <div><dt>Erros</dt><dd id="game-errors">0</dd></div>
+                    <div><dt>Recorde pessoal</dt><dd id="game-record">—</dd></div>
                     <div><dt>Pontos</dt><dd id="game-score">0</dd></div>
                     <div><dt>Acertos</dt><dd id="game-correct">0</dd></div>
                     <div><dt>Sequência</dt><dd id="game-streak">0</dd></div>
@@ -66,7 +107,9 @@
                 </dl>
             </div>
         </section>
+        </details>
     </main>
     <script src="/static/js/menu-game.js"></script>
+    <script src="/static/js/menu-carousel.js"></script>
 </body>
 </html>

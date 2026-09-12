@@ -1,25 +1,33 @@
 (() => {
-    const questionElement = document.querySelector("#game-question");
-    const answerInput = document.querySelector("#game-answer");
-    const form = document.querySelector("#game-form");
-    const newQuestionButton = document.querySelector("#new-question");
-    const feedbackElement = document.querySelector("#game-feedback");
-    const scoreElement = document.querySelector("#game-score");
-    const correctElement = document.querySelector("#game-correct");
-    const streakElement = document.querySelector("#game-streak");
-    const bestStreakElement = document.querySelector("#game-best-streak");
-
-    let answer = 0;
-    let score = 0;
-    let correctAnswers = 0;
-    let streak = 0;
-    let bestStreak = 0;
-    let nextQuestionTimer;
-
-    const randomInteger = (minimum, maximum) =>
-        Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-
+    const $ = (id) => document.getElementById(id);
+    const questionElement = $("game-question"), answerInput = $("game-answer");
+    const form = $("game-form"), confirm = form.querySelector("button[type='submit']");
+    const start = $("game-start"), feedback = $("game-feedback");
+    const BEST_KEY = "mathChallengeBestTime", TARGET = 10;
+    let answer = 0, correct = 0, errors = 0, streak = 0, bestStreak = 0;
+    let active = false, answered = true, startedAt = 0, elapsed = 0, ticker, next;
+    let best = null;
+    try {
+        const saved = Number(localStorage.getItem(BEST_KEY));
+        if (Number.isFinite(saved) && saved > 0) best = saved;
+    } catch (_) { /* O desafio continua disponível sem armazenamento. */ }
+    const format = (ms) => {
+        const seconds = Math.floor(ms / 1000);
+        return `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
+    };
+    const update = () => {
+        $("game-time").textContent = format(elapsed);
+        $("game-correct").textContent = `${correct} / ${TARGET}`;
+        $("game-errors").textContent = errors;
+        $("game-record").textContent = best === null ? "—" : format(best);
+        $("game-score").textContent = correct * 10;
+        $("game-streak").textContent = streak;
+        $("game-best-streak").textContent = bestStreak;
+    };
+    const lock = (value) => { answerInput.disabled = value; confirm.disabled = value; };
+    const randomInteger = (minimum, maximum) => Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
     const createQuestion = () => {
+        if (!active) return;
         const operation = randomInteger(0, 3);
         let firstNumber;
         let secondNumber;
@@ -49,56 +57,49 @@
 
         questionElement.textContent = `${firstNumber} ${symbol} ${secondNumber} = ?`;
         answerInput.value = "";
-        answerInput.disabled = false;
-        form.querySelector("button[type='submit']").disabled = false;
-        feedbackElement.textContent = "";
-        feedbackElement.className = "game-feedback";
+        answered = false;
+        lock(false);
+        feedback.textContent = "";
         answerInput.focus();
     };
-
-    const updateStats = () => {
-        scoreElement.textContent = score;
-        correctElement.textContent = correctAnswers;
-        streakElement.textContent = streak;
-        bestStreakElement.textContent = bestStreak;
-    };
-
+    start.addEventListener("click", () => {
+        clearTimeout(next); clearInterval(ticker);
+        correct = errors = streak = bestStreak = elapsed = 0;
+        active = true; startedAt = performance.now();
+        start.hidden = true;
+        update(); createQuestion();
+        ticker = setInterval(() => { elapsed = performance.now() - startedAt; update(); }, 250);
+    });
     form.addEventListener("submit", (event) => {
         event.preventDefault();
-        const userAnswer = Number(answerInput.value);
-
-        if (answerInput.value.trim() === "") {
-            feedbackElement.textContent = "Digite uma resposta para confirmar.";
-            feedbackElement.className = "game-feedback game-feedback--wrong";
-            answerInput.focus();
+        if (!active || answered) return;
+        if (answerInput.value.trim() === "" || !Number.isFinite(Number(answerInput.value))) {
+            feedback.textContent = "Digite uma resposta para confirmar.";
             return;
         }
-
-        if (userAnswer === answer) {
-            score += 10;
-            correctAnswers += 1;
-            streak += 1;
-            bestStreak = Math.max(bestStreak, streak);
-            feedbackElement.textContent = "Muito bem! +10 pontos";
-            feedbackElement.className = "game-feedback game-feedback--correct";
-            updateStats();
-            answerInput.disabled = true;
-            form.querySelector("button[type='submit']").disabled = true;
-            nextQuestionTimer = window.setTimeout(createQuestion, 900);
-            return;
+        // Uma pergunta é encerrada na primeira tentativa, inclusive após erro.
+        answered = true; lock(true);
+        const hit = Number(answerInput.value) === answer;
+        if (hit) { correct++; streak++; bestStreak = Math.max(bestStreak, streak); }
+        else { errors++; streak = 0; }
+        elapsed = performance.now() - startedAt;
+        feedback.className = `game-feedback game-feedback--${hit ? "correct" : "wrong"}`;
+        feedback.textContent = hit ? "Muito bem! +10 pontos" : `Quase! A resposta correta era ${answer}.`;
+        if (correct === TARGET) {
+            active = false; clearInterval(ticker);
+            const record = best === null || elapsed < best;
+            let storageMessage = "";
+            if (record) {
+                best = elapsed;
+                try { localStorage.setItem(BEST_KEY, String(best)); }
+                catch (_) { storageMessage = " Não foi possível salvar o recorde neste navegador."; }
+            }
+            feedback.textContent = `Desafio concluído!${record ? " Novo recorde!" : ""} Tempo: ${format(elapsed)}. Erros: ${errors}.${storageMessage}`;
+            start.textContent = "Jogar novamente"; start.hidden = false; start.focus();
+        } else {
+            next = setTimeout(createQuestion, hit ? 900 : 1600);
         }
-
-        streak = 0;
-        feedbackElement.textContent = `Quase! A resposta correta era ${answer}.`;
-        feedbackElement.className = "game-feedback game-feedback--wrong";
-        updateStats();
-        answerInput.select();
+        update();
     });
-
-    newQuestionButton.addEventListener("click", () => {
-        window.clearTimeout(nextQuestionTimer);
-        createQuestion();
-    });
-
-    createQuestion();
+    lock(true); update();
 })();

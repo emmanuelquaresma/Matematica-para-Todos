@@ -1,0 +1,66 @@
+/* Identidade compartilhada. Carregar depois dos estilos específicos da página. */
+:root {
+    --site-ink: #163653;
+    --site-muted: #516a7f;
+    --site-blue: #17659a;
+    --site-line: #dae5ed;
+    --site-yellow: #ffe087;
+}
+html { scroll-padding-top: 92px; }
+body { font-family: "Segoe UI", system-ui, sans-serif; color: var(--site-ink); background: #f7fafc; }
+[hidden] { display: none !important; }
+.site-header {
+    position: sticky; top: 0; z-index: 20;
+    padding: 0; color: var(--site-ink); text-align: left;
+    background: rgba(255, 255, 255, .96); border-bottom: 1px solid var(--site-line);
+}
+.site-header__inner { max-width: 1200px; min-height: 72px; margin: auto; padding: 12px 24px; display: flex; align-items: center; gap: 28px; }
+.site-brand { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; color: var(--site-ink); font-size: 1rem; font-weight: 750; line-height: 1.25; white-space: nowrap; }
+.site-brand__symbol { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: #eaf3fa; color: var(--site-blue); font-size: 1.65rem; }
+.site-brand__sub { font-weight: 500; }
+.site-nav { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.site-nav a { padding: 10px 14px; border-radius: 10px; font-size: .93rem; font-weight: 600; text-decoration: none; color: var(--site-muted); }
+.site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--site-blue); background: #edf5fa; }
+.site-enter { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 42px; padding: 9px 16px; border: 1px solid #edce77; border-radius: 12px; background: #fff3c9; color: var(--site-ink); font-weight: 650; font-size: .92rem; text-decoration: none; }
+.site-enter:hover { background: var(--site-yellow); }
+.site-toggle { display: none; }
+.site-header a:focus-visible, .site-header button:focus-visible { outline: 3px solid var(--site-blue); outline-offset: 3px; }
+body.internal-page {
+    background-image: linear-gradient(rgba(246, 250, 254, .92), rgba(255, 255, 255, .95)), url('/static/img/banner/banner-matematica-pra-todos.webp');
+    background-size: cover; background-position: center; background-attachment: fixed;
+}
+.page-heading, .checkers-header.page-heading {
+    position: static; max-width: 1200px; margin: auto; padding: 44px 24px 16px;
+    background: transparent; color: var(--site-ink); text-align: center;
+}
+.page-heading h1 { margin: 0; color: var(--site-ink); font-size: clamp(1.85rem, 4vw, 2.6rem); letter-spacing: -.035em; }
+.page-heading p { margin: 10px 0 0; color: var(--site-muted); line-height: 1.6; }
+.internal-page .card, .internal-page .game-panel, .internal-page .winner-card {
+    border: 1px solid var(--site-line); border-radius: 20px;
+    background: rgba(255, 255, 255, .96); box-shadow: 0 6px 24px rgba(22, 54, 83, .055);
+}
+.internal-page .page-navigation__back { padding: 8px 12px; border: 0; background: transparent; color: var(--site-muted); font-size: .9rem; }
+.internal-page .page-navigation__back:hover { background: #edf5fa; transform: none; }
+.internal-page .page-navigation__back:focus-visible { outline-color: var(--site-blue); }
+@media (max-width: 720px) {
+    body.internal-page { background-attachment: scroll; }
+    .site-header__inner { min-height: 64px; padding: 10px 16px; gap: 12px; flex-wrap: wrap; }
+    .site-brand { font-size: .92rem; gap: 8px; }
+    .site-brand__symbol { width: 34px; height: 34px; }
+    .site-brand__sub { display: block; }
+    .site-enter { margin-left: auto; width: 40px; min-height: 40px; padding: 8px; }
+    .site-enter > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    .site-toggle { display: inline-flex; align-items: center; justify-content: center; padding: 8px; width: 40px; height: 40px; border: 1px solid var(--site-line); border-radius: 10px; background: #fff; color: var(--site-ink); cursor: pointer; }
+    .site-toggle:hover { background: #edf5fa; }
+    .site-nav { order: 4; margin: 0; width: 100%; justify-content: center; }
+    .site-header.is-enhanced .site-nav { display: none; }
+    .site-header.is-enhanced.is-open .site-nav { display: flex; }
+    .page-heading, .checkers-header.page-heading { padding: 30px 20px 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .subject-card, .opening__button { transition: none !important; }
+}
+
+/* O gráfico respeita a largura disponível nos painéis menores. */
+.internal-page canvas { max-width: 100%; }

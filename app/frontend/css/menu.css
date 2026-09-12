@@ -16,11 +16,8 @@ body {
     background: linear-gradient(180deg, #e5f6ff 0%, #f8fcff 58%, #fff8d9 100%);
 }
 
-.menu-page { width: min(1000px, 100%); min-height: 100vh; margin: 0 auto; padding: clamp(28px, 6vw, 72px) 24px; }
-.menu-header { max-width: 680px; margin-bottom: 42px; }
-
-.brand { display: inline-block; margin-bottom: 44px; color: var(--blue-950); font-weight: 900; text-decoration: none; }
-.brand::before { content: "∑"; display: inline-grid; width: 34px; height: 34px; margin-right: 9px; border-radius: 11px; color: var(--blue-950); background: var(--yellow-300); place-items: center; }
+.menu-page { width: min(1200px, 100%); min-height: calc(100vh - 72px); margin: 0 auto; padding: clamp(28px, 6vw, 72px) 24px; }
+.menu-header { max-width: 760px; margin: 0 auto 24px; text-align: center; padding: 12px 0; }
 
 .menu-kicker {
     margin: 0 0 10px;
@@ -34,30 +31,60 @@ h1, h2, p { margin-top: 0; }
 h1 { margin-bottom: 14px; color: var(--blue-950); font-size: clamp(2.1rem, 5vw, 3.7rem); line-height: 1.08; }
 .menu-header > p:last-child { margin-bottom: 0; font-size: 1.1rem; line-height: 1.6; }
 
-.subject-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+/* A largura fixa por card e o padding simétrico permitem centralizar as extremidades. */
+.activity-carousel { --card-width: min(76vw, 410px); position: relative; scroll-margin-top: 90px; }
+.subject-grid { position: relative; display: flex; gap: 24px; overflow-x: auto; padding: 30px calc((100% - var(--card-width)) / 2) 38px; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.subject-grid::-webkit-scrollbar { display: none; }
+.subject-grid:focus-visible { outline: 2px solid var(--blue-700); outline-offset: 4px; border-radius: 20px; }
+.subject-grid.is-dragging { scroll-snap-type: none; cursor: grabbing; }
+.subject-grid.is-dragging .subject-card { cursor: grabbing; }
+.carousel-controls { display: flex; align-items: center; justify-content: center; gap: 24px; }
+.carousel-arrow { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #c9dae7; border-radius: 50%; background: #fff; color: var(--blue-950); font: inherit; font-size: 1.4rem; cursor: pointer; }
+.carousel-arrow:hover { background: #edf5fa; }
+.carousel-arrow:disabled { opacity: .35; cursor: default; }
+.carousel-dots { display: flex; gap: 2px; }
+.carousel-dot { display: grid; place-items: center; width: 32px; height: 36px; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.carousel-dot::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #b9cbd8; transition: width .2s; }
+.carousel-dot[aria-pressed="true"]::after { width: 22px; border-radius: 8px; background: #17659a; }
+.carousel-controls button:focus-visible { outline: 3px solid #17659a; outline-offset: 3px; }
+.practice-disclosure { margin-top: 48px; scroll-margin-top: 90px; }
+.practice-disclosure > summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 26px; border: 1px solid #dae5ed; border-radius: 18px; background: #fff; color: var(--blue-950); font-weight: 700; cursor: pointer; list-style: none; }
+.practice-disclosure > summary::-webkit-details-marker { display: none; }
+.practice-disclosure > summary:focus-visible { outline: 3px solid #17659a; outline-offset: 3px; }
+.practice-disclosure[open] > summary > span { transform: rotate(45deg); }
+.practice-disclosure .lightning-game { margin-top: 16px; }
+
 
 .subject-card {
     display: flex;
-    min-height: 300px;
-    padding: 28px;
+    flex: 0 0 var(--card-width);
+    min-width: 0;
+    min-height: 360px;
+    scroll-snap-align: center;
+    padding: 32px;
+    user-select: none;
     flex-direction: column;
-    border: 2px solid rgba(18, 52, 91, 0.08);
+    border: 1px solid #d6e3ed;
     border-radius: 24px;
     color: var(--ink);
     text-decoration: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transform: scale(.92);
+    transition: transform .25s ease, box-shadow .25s ease;
 }
 
-a.subject-card:hover, a.subject-card:focus-visible { transform: translateY(-6px); box-shadow: 0 18px 30px rgba(18, 52, 91, 0.14); }
-.subject-card--linear { background: var(--blue-100); }
-.subject-card--quadratic { background: #fff4bd; }
-.subject-card--checkers { background: #ddecff; }
+a.subject-card:hover { box-shadow: 0 8px 24px rgba(18, 52, 91, .08); }
+a.subject-card:focus-visible { outline: 3px solid #17659a; outline-offset: 4px; }
+.subject-card.is-active { transform: scale(1); box-shadow: 0 14px 30px rgba(18, 52, 91, .11); border-color: #a8c6dc; }
+.subject-card--linear { background: #f0f7fc; }
+.subject-card--quadratic { background: #fff9e8; }
+.subject-card--checkers { background: #eef4fb; }
+.subject-card--lightning { background: #fff8ed; }
 
 .subject-card__number {
     display: grid;
     width: 52px;
     height: 52px;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     border-radius: 16px;
     color: var(--blue-950);
     font-size: 1.25rem;
@@ -72,7 +99,7 @@ a.subject-card:hover, a.subject-card:focus-visible { transform: translateY(-6px)
 
 .lightning-game {
     display: grid;
-    grid-template-columns: minmax(220px, 0.75fr) minmax(0, 1.25fr);
+    grid-template-columns: minmax(190px, .7fr) minmax(0, 1.3fr);
     gap: clamp(24px, 5vw, 56px);
     align-items: center;
     margin-top: clamp(42px, 7vw, 72px);
@@ -80,7 +107,7 @@ a.subject-card:hover, a.subject-card:focus-visible { transform: translateY(-6px)
     border: 2px solid rgba(18, 52, 91, 0.1);
     border-radius: 28px;
     background: #fff;
-    box-shadow: 0 16px 35px rgba(18, 52, 91, 0.1);
+    box-shadow: 0 6px 24px rgba(18, 52, 91, .05);
 }
 
 .game-kicker { margin-bottom: 8px; color: var(--blue-700); font-weight: 900; }
@@ -120,11 +147,27 @@ a.subject-card:hover, a.subject-card:focus-visible { transform: translateY(-6px)
 
 @media (max-width: 580px) {
     .menu-page { padding-inline: 18px; }
-    .brand { margin-bottom: 30px; }
-    .subject-grid { grid-template-columns: 1fr; }
-    .subject-card { min-height: 240px; }
+    .subject-grid { gap: 12px; }
+    .subject-card { min-height: 320px; padding: 24px; }
+    .carousel-controls { gap: 16px; }
+    .carousel-arrow { width: 38px; height: 38px; }
     .lightning-game { grid-template-columns: 1fr; padding: 24px 18px; }
     .game-form { grid-template-columns: 1fr 1fr; }
     .game-form input { grid-column: 1 / -1; }
     .game-stats { grid-template-columns: repeat(2, 1fr); }
 }
+
+@media (min-width: 581px) and (max-width: 1000px) { .lightning-game { grid-template-columns: 1fr; } }
+
+.lightning-game > * { min-width: 0; }
+@media (max-width: 380px) {
+    .game-form { grid-template-columns: minmax(0, 1fr); }
+    .game-form input { grid-column: auto; }
+}
+
+.game-form { grid-template-columns: minmax(0, 1fr) auto; margin-top: 18px; }
+.game-form input { grid-column: auto; }
+.game-button:disabled { opacity: .55; cursor: default; transform: none; }
+.game-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#game-start { display: block; margin: 0 auto; }
+@media (max-width: 380px) { .game-form { grid-template-columns: minmax(0, 1fr); } }
